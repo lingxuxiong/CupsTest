@@ -30,6 +30,18 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Nvwo",
+      "srcPath": "./Nvwo",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
     }
   ]
 }
