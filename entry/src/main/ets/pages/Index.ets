@@ -1,7 +1,10 @@
+import {add} from "Nvwo";
+import { hilog } from '@kit.PerformanceAnalysisKit';
+
 @Entry
 @Component
 struct Index {
-  @State message: string = 'Hello World';
+  @State message: string = 'Hello Nvwo';
 
   build() {
     RelativeContainer() {
@@ -12,6 +15,9 @@ struct Index {
         .alignRules({
           center: { anchor: '__container__', align: VerticalAlign.Center },
           middle: { anchor: '__container__', align: HorizontalAlign.Center }
+        })
+        .onClick(() => {
+          hilog.info(0x0000, 'Nvwo', 'Test NAPI 2 + 3 = %{public}d', add(2, 3));
         })
     }
     .height('100%')
