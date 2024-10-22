@@ -25,4 +25,4 @@ set_target_properties(mycups
 
 add_library(nvwo SHARED napi_init.cpp)
 
-target_link_libraries(nvwo PUBLIC libace_napi.z.so mycups)
+target_link_libraries(nvwo PUBLIC libace_napi.z.so libhilog_ndk.z.so mycups)

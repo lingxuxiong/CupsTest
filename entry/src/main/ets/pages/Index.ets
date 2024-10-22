@@ -1,4 +1,4 @@
-import {add} from "Nvwo";
+import {add, discoverDevices} from "Nvwo";
 import { hilog } from '@kit.PerformanceAnalysisKit';
 
 @Entry
@@ -18,6 +18,7 @@ struct Index {
         })
         .onClick(() => {
           hilog.info(0x0000, 'Nvwo', 'Test NAPI 2 + 3 = %{public}d', add(2, 3));
+          hilog.info(0x0000, 'Nvwo', 'start discoverDevices', discoverDevices());
         })
     }
     .height('100%')
