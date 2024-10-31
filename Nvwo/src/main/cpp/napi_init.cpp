@@ -7,8 +7,10 @@
 #define LOG_TAG TAG
 #include <hilog/log.h>
 #include "cups/cups.h"
+#include "math/sum.h"
+#include <cjson/cJSON.h>
 
-static void enumPrinters() {
+static void testEnumPrinters() {
     auto print_dest = [](void *user_data, unsigned flags, cups_dest_t *dest) {
         if (dest->instance)
             OH_LOG_DEBUG(LOG_APP, "%{public}s%{public}s", dest->name, dest->instance);
@@ -20,10 +22,44 @@ static void enumPrinters() {
     cupsEnumDests(CUPS_DEST_FLAGS_NONE, 1000, NULL, 0, 0, print_dest, NULL);
 }
 
+static void testCJSON() {
+    // Create the root object
+    cJSON *root = cJSON_CreateObject();
+    
+    // Create the cars array
+    cJSON *cars = cJSON_CreateArray();
+    cJSON_AddItemToObject(root, "cars", cars);
+
+    // Create the first car object
+    cJSON *car1 = cJSON_CreateObject();
+    cJSON_AddItemToObject(car1, "CarType", cJSON_CreateString("BMW"));
+    cJSON_AddItemToObject(car1, "carID", cJSON_CreateString("bmw123"));
+    cJSON_AddItemToArray(cars, car1);
+
+    // Create the second car object
+    cJSON *car2 = cJSON_CreateObject();
+    cJSON_AddItemToObject(car2, "CarType", cJSON_CreateString("Mercedes"));
+    cJSON_AddItemToObject(car2, "carID", cJSON_CreateString("merc123"));
+    cJSON_AddItemToArray(cars, car2);
+
+    // Print the JSON object
+    char *jsonString = cJSON_Print(root);
+    OH_LOG_Print(LOG_APP, LOG_ERROR, 0xFF00, "NDKDemo", "cJSON so %{public}s", jsonString);
+    
+    cJSON_Delete(root);
+}
+
+static void testMath() {
+    int s = sum(2, 3);
+    OH_LOG_Print(LOG_APP, LOG_ERROR, 0xFF00, "NDKDemo", "sum=%{public}d", s);
+}
+
 static napi_value DiscoverDevices(napi_env env, napi_callback_info info)
 {
     OH_LOG_DEBUG(LOG_APP, "%{public}s", "in DiscoverPrinters");
-    enumPrinters();
+    testCJSON();
+//     testEnumPrinters();
+    testMath();
     return 0;
 }
 
